@@ -217,35 +217,49 @@ function initVertexBuffer()
 
 	var c30 = Math.sqrt(0.75); // == cos(30deg) == sqrt(3) / 2
 	var sq2 = Math.sqrt(2.0);
+	// var angl = 
 
 	var colorShapes = new Float32Array([
 		// Vertex coordinates(x,y,z,w) and color (R,G,B) for a color tetrahedron:
 		//		Apex on +z axis; equilateral triangle base at z=0
 		/*	Nodes:
 			 0.0,  0.0, sq2, 1.0,		1.0,  1.0,	1.0,	// Node 0 (apex, +z axis;  white)
-		     c30, -0.5, 0.0, 1.0, 		0.0,  0.0,  1.0, 	// Node 1 (base: lower rt; red)
-		     0.0,  1.0, 0.0, 1.0,  		1.0,  0.0,  0.0,	// Node 2 (base: +y axis;  grn)
-		    -c30, -0.5, 0.0, 1.0, 		0.0,  1.0,  0.0, 	// Node 3 (base:lower lft; blue)
+		     c30, -0.5, 0.0, 1.0, 		0.0,  0.0,  1.0, 	// Node 1 (base: lower rt; red)b
+		     0.0,  1.0, 0.0, 1.0,  		1.0,  0.0,  0.0,	// Node 2 (base: +y axis;  grn)r
+		    -c30, -0.5, 0.0, 1.0, 		0.0,  1.0,  0.0, 	// Node 3 (base:lower lft; blue)g
 
 		*/
 		// Face 0: (left side)  
-		0.0, 0.0, sq2, 1.0, 1.0, 1.0, 1.0, // Node 0
-		c30, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, // Node 1
-		0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, // Node 2
+		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 0
+		c30, -0.5, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 1
+		0.0, 1.0, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 2
 		// Face 1: (right side)
-		0.0, 0.0, sq2, 1.0, 1.0, 1.0, 1.0, // Node 0
-		0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, // Node 2
-		-c30, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0, // Node 3
+		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 0
+		0.0, 1.0, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 2
+		-c30, -0.5, 0.0, 1.0, 		0.0, 1.0, 0.0, // Node 3
 		// Face 2: (lower side)
-		0.0, 0.0, sq2, 1.0, 1.0, 1.0, 1.0, // Node 0 
-		-c30, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0, // Node 3
-		c30, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, // Node 1 
+		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 0 
+		-c30, -0.5, 0.0, 1.0, 		0.0, 1.0, 0.0, // Node 3
+		c30, -0.5, 0.0, 1.0, 		0.0, 0.0, 1.0, // Node 1 
 		// Face 3: (base side)  
-		-c30, -0.5, 0.0, 1.0, 0.0, 1.0, 0.0, // Node 3
-		0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, // Node 2
-		c30, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, // Node 1
+		-c30, -0.5, 0.0, 1.0, 		0.0, 1.0, 0.0, // Node 3
+		0.0, 1.0, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 2
+		c30, -0.5, 0.0, 1.0, 		0.0, 0.0, 1.0, // Node 1
+
+		// part 1 //
+		// black purple yellow triangle
+		0.0, 0.0, sq2, 1.0, 		0.0, 0.0, 0.0, // Node 3 black
+		c30, -0.5, 0.0, 1.0, 		0.5, 0.0, 0.5, // Node 4 puple
+		0.0, 1.0, 0.0, 1.0, 		0.5, 0.5, 0.0, // Node 5 yellow
+
+		// part 2 //
+		// white red black triangle
+		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 3 white
+		c30, -0.5, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 4 red
+		0.0, 1.0, 0.0, 1.0, 		0.0, 0.0, 0.0, // Node 5 black
+
 	]);
-	g_vertsMax = 12; // 12 tetrahedron vertices.
+	g_vertsMax = 18; // 12 tetrahedron vertices.
 	// we can also draw any subset of these we wish,
 	// such as the last 3 vertices.(onscreen at upper right)
 
@@ -350,6 +364,7 @@ function drawAll()
 	// Draw triangles: start at vertex 0 and draw 12 vertices
 	// gl.drawArrays(gl.TRIANGLES, 0, 12);
 	DrawTetra();
+	DrawPart1();
 
 	// NEXT, create different drawing axes, and...
 	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
@@ -402,6 +417,14 @@ function DrawTetra() {
 
 function DrawWedge() {
 	gl.drawArrays(gl.TRIANGLES, 6, 6);
+}
+
+function DrawPart1() {
+	gl.drawArrays(gl.TRIANGLES, 12, 3)
+}
+
+function DrawPart2() {
+	// gl.drawArrays(gl.TRIANGLES, 6, 6);
 }
 
 // Last time that this function was called:  (used for animation timing)
