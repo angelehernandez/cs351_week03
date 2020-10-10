@@ -348,7 +348,8 @@ function drawAll()
 	// Pass our current matrix to the vertex shaders:
 	gl.uniformMatrix4fv(g_modelMatLoc, false, g_modelMatrix.elements);
 	// Draw triangles: start at vertex 0 and draw 12 vertices
-	gl.drawArrays(gl.TRIANGLES, 0, 12);
+	// gl.drawArrays(gl.TRIANGLES, 0, 12);
+	DrawTetra();
 
 	// NEXT, create different drawing axes, and...
 	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
@@ -390,8 +391,17 @@ function drawAll()
 	//						the different set of vertices stored in our VBO:
 	gl.uniformMatrix4fv(g_modelMatLoc, false, g_modelMatrix.elements);
 	// Draw only the last 2 triangles: start at vertex 6, draw 6 vertices
-	gl.drawArrays(gl.TRIANGLES, 6, 6);
+	// gl.drawArrays(gl.TRIANGLES, 6, 6);
+	DrawWedge();
 
+}
+
+function DrawTetra() {
+	gl.drawArrays(gl.TRIANGLES, 0, 12)
+}
+
+function DrawWedge() {
+	gl.drawArrays(gl.TRIANGLES, 6, 6);
 }
 
 // Last time that this function was called:  (used for animation timing)
