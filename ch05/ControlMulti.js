@@ -69,6 +69,8 @@ var g_lastMS = Date.now(); // Timestamp for most-recently-drawn image;
 // elapsed since last on-screen image.
 var g_angle01 = 0; // initial rotation angle
 var g_angle01Rate = 45.0; // rotation speed, in degrees/second 
+var g_angle02 = 0; // initial rotation angle
+var g_angle02Rate = 45.0; // rotation speed, in degrees/second 
 
 //------------For mouse click-and-drag: -------------------------------
 var g_isDrag = false; // mouse-drag: true when user holds down mouse button
@@ -185,7 +187,7 @@ function main()
 	//----------------- 
 	var tick = function ()
 	{
-		g_angle01 = animate(g_angle01); // Update the rotation angle
+		g_angle01 = animate(); // Update the rotation angle
 		drawAll(); // Draw all parts
 		//    console.log('g_angle01=',g_angle01.toFixed(5)); // put text in console.
 
@@ -444,25 +446,21 @@ function DrawPart2() {
 // Last time that this function was called:  (used for animation timing)
 var g_last = Date.now();
 
-function animate(angle)
+function animate()
 {
 	//==============================================================================
-	// Calculate the elapsed time
+	// Calculate the elapsed time; update all animation angles & amounts.
 	var now = Date.now();
-	var elapsed = now - g_last;
+	var elapsed = now - g_last; // elapsed time in milliseconds
 	g_last = now;
 
 	// Update the current rotation angle (adjusted by the elapsed time)
-	//  limit the angle to move smoothly between +120 and -85 degrees:
-	//  if(angle >  120.0 && g_angle01Rate > 0) g_angle01Rate = -g_angle01Rate;
-	//  if(angle <  -85.0 && g_angle01Rate < 0) g_angle01Rate = -g_angle01Rate;
-
-	var newAngle = angle + (g_angle01Rate * elapsed) / 1000.0;
-	if (newAngle > 180.0) newAngle = newAngle - 360.0;
-	if (newAngle < -180.0) newAngle = newAngle + 360.0;
-	return newAngle;
+	//  limit the angle to move smoothly between +120 and -120 degrees:
+	if (g_angle01 > 120.0 && g_angle01Rate > 0) g_angle01Rate = -g_angle01Rate;
+	if (g_angle01 < -120.0 && g_angle01Rate < 0) g_angle01Rate = -g_angle01Rate;
+	g_angle01 = g_angle01 + (g_angle01Rate * elapsed) / 1000.0; // rate in degrees/sec
+	return g_angle01
 }
-
 //==================HTML Button Callbacks======================
 
 function angleSubmit()
