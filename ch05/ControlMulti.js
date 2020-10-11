@@ -357,12 +357,20 @@ function drawAll()
 		// to match WebGL display canvas.
 	g_modelMatrix.scale(0.5, 0.5, 0.5);
 		// if you DON'T scale, tetra goes outside the CVV; clipped!
-	g_modelMatrix.rotate(g_angle01, 0, 1, 0); // Make new drawing axes that
+	g_modelMatrix.rotate(g_angle01, 1, 0, 0); // Make new drawing axes that
 
 	DrawTetra();
 
-	g_modelMatrix.setTranslate(0.5, -0.5, 0.0); // 'set' means DISCARD old matrix,
-	g_modelMatrix.scale(0.5, 0.5, -1); // convert to left-handed coord sys
+
+	g_modelMatrix.setTranslate(0.028, -0.652, 0.0); // 'set' means DISCARD old matrix,
+		// (drawing axes centered in CVV), and then make new
+		// drawing axes moved to the lower-left corner of CVV. 
+	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
+		// to match WebGL display canvas.
+	g_modelMatrix.scale(0.25, 0.25, 0.25);
+		// if you DON'T scale, tetra goes outside the CVV; clipped!
+	g_modelMatrix.rotate(g_angle01, 1, 0, 0); // Make new drawing axes that
+	
 	DrawPart1();
 
 	g_modelMatrix.setTranslate(-0.5, 0.5, 0.0); // 'set' means DISCARD old matrix,
