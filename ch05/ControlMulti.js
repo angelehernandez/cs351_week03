@@ -248,15 +248,15 @@ function initVertexBuffer()
 
 		// part 1 //
 		// black purple yellow triangle
-		0.0, 0.0, sq2, 1.0, 		0.0, 0.0, 0.0, // Node 3 black
+		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 3 white
 		c30, -0.5, 0.0, 1.0, 		0.5, 0.0, 0.5, // Node 4 puple
 		0.0, 1.0, 0.0, 1.0, 		0.5, 0.5, 0.0, // Node 5 yellow
 
 		// part 2 //
 		// white red black triangle
-		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 3 white
-		c30, -0.5, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 4 red
-		0.0, 1.0, 0.0, 1.0, 		0.0, 0.0, 0.0, // Node 5 black
+		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 0
+		0.0, 1.0, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 2
+		-c30, -0.5, 0.0, 1.0, 		0.0, 1.0, 0.0, // Node 3
 
 	]);
 	g_vertsMax = 18; // 12 tetrahedron vertices.
@@ -364,7 +364,6 @@ function drawAll()
 	// Draw triangles: start at vertex 0 and draw 12 vertices
 	// gl.drawArrays(gl.TRIANGLES, 0, 12);
 	DrawTetra();
-	DrawPart1();
 
 	// NEXT, create different drawing axes, and...
 	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
@@ -408,6 +407,8 @@ function drawAll()
 	// Draw only the last 2 triangles: start at vertex 6, draw 6 vertices
 	// gl.drawArrays(gl.TRIANGLES, 6, 6);
 	DrawWedge();
+	DrawPart1();
+	DrawPart2();
 
 }
 
@@ -420,11 +421,63 @@ function DrawWedge() {
 }
 
 function DrawPart1() {
-	gl.drawArrays(gl.TRIANGLES, 12, 3)
+	gl.uniformMatrix4fv(g_modelMatLoc, false, g_modelMatrix.elements);
+	// Draw triangles: start at vertex 0 and draw 12 vertices
+	// gl.drawArrays(gl.TRIANGLES, 0, 12);
+	
+	gl.drawArrays(gl.TRIANGLES, 12, 3);
+
+	// NEXT, create different drawing axes, and...
+	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
+	// (drawing axes centered in CVV), and then make new
+	// drawing axes moved to the lower-left corner of CVV.
+	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
+	// to match WebGL display canvas.
+	g_modelMatrix.scale(0.3, 0.3, 0.3); // Make it smaller.
+
+	// Attempt 2: perp-axis rotation:
+	// rotate on axis perpendicular to the mouse-drag direction:
+	var dist = Math.sqrt(g_xMdragTot * g_xMdragTot + g_yMdragTot * g_yMdragTot);
+	// why add 0.001? avoids divide-by-zero in next statement
+	// in cases where user didn't drag the mouse.)
+	g_modelMatrix.rotate(dist * 120.0, -g_yMdragTot + 0.0001, g_xMdragTot + 0.0001, 0.0);
+	// Acts weirdly as rotation amounts get far from 0 degrees.
+	// ?why does intuition fail so quickly here?
+
+	//-------------------------------
+	// Attempt 3: Quaternions? What will work better?
+
+	// YOUR CODE HERE
 }
 
 function DrawPart2() {
-	// gl.drawArrays(gl.TRIANGLES, 6, 6);
+	gl.uniformMatrix4fv(g_modelMatLoc, false, g_modelMatrix.elements);
+	// Draw triangles: start at vertex 0 and draw 12 vertices
+	// gl.drawArrays(gl.TRIANGLES, 0, 12);
+	
+	gl.drawArrays(gl.TRIANGLES, 6, 6);
+
+	// NEXT, create different drawing axes, and...
+	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
+	// (drawing axes centered in CVV), and then make new
+	// drawing axes moved to the lower-left corner of CVV.
+	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
+	// to match WebGL display canvas.
+	g_modelMatrix.scale(0.3, 0.3, 0.3); // Make it smaller.
+
+	// Attempt 2: perp-axis rotation:
+	// rotate on axis perpendicular to the mouse-drag direction:
+	var dist = Math.sqrt(g_xMdragTot * g_xMdragTot + g_yMdragTot * g_yMdragTot);
+	// why add 0.001? avoids divide-by-zero in next statement
+	// in cases where user didn't drag the mouse.)
+	g_modelMatrix.rotate(dist * 120.0, -g_yMdragTot + 0.0001, g_xMdragTot + 0.0001, 0.0);
+	// Acts weirdly as rotation amounts get far from 0 degrees.
+	// ?why does intuition fail so quickly here?
+
+	//-------------------------------
+	// Attempt 3: Quaternions? What will work better?
+
+	// YOUR CODE HERE
 }
 
 // Last time that this function was called:  (used for animation timing)
