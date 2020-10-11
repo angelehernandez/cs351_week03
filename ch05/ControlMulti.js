@@ -459,6 +459,13 @@ function animate()
 	if (g_angle01 > 120.0 && g_angle01Rate > 0) g_angle01Rate = -g_angle01Rate;
 	if (g_angle01 < -120.0 && g_angle01Rate < 0) g_angle01Rate = -g_angle01Rate;
 	g_angle01 = g_angle01 + (g_angle01Rate * elapsed) / 1000.0; // rate in degrees/sec
+
+	// Update the current rotation angle (adjusted by the elapsed time)
+	//  limit the angle to move smoothly between +45 and -45 degrees:
+	if (g_angle02 > 45.0 && g_angle02Rate > 0) g_angle02Rate = -g_angle02Rate;
+	if (g_angle02 < -45.0 && g_angle02Rate < 0) g_angle02Rate = -g_angle02Rate;
+	g_angle02 = g_angle02 + (g_angle02Rate * elapsed) / 1000.0; // rate in degrees/sec
+
 	return g_angle01
 }
 //==================HTML Button Callbacks======================
