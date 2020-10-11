@@ -357,23 +357,56 @@ function drawAll()
 		// to match WebGL display canvas.
 	g_modelMatrix.scale(0.5, 0.5, 0.5);
 		// if you DON'T scale, tetra goes outside the CVV; clipped!
-	g_modelMatrix.rotate(g_angle01, 1, 0, 0); // Make new drawing axes that
+	g_modelMatrix.rotate(g_angle02, 1, 0, 0); // Make new drawing axes that
 
 	DrawTetra();
 
+
+	g_modelMatrix.setTranslate(-0.4, -0.4, 0.0); // 'set' means DISCARD old matrix,
+		// (drawing axes centered in CVV), and then make new
+		// drawing axes moved to the lower-left corner of CVV. 
+	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
+		// to match WebGL display canvas.
+	g_modelMatrix.scale(0.5, 0.5, 0.5);
+		// if you DON'T scale, tetra goes outside the CVV; clipped!
+	g_modelMatrix.rotate(g_angle02, 1, 0, 0); // Make new drawing axes that
+
+	DrawPart1();
 
 	g_modelMatrix.setTranslate(0.028, -0.652, 0.0); // 'set' means DISCARD old matrix,
 		// (drawing axes centered in CVV), and then make new
 		// drawing axes moved to the lower-left corner of CVV. 
 	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
 		// to match WebGL display canvas.
-	g_modelMatrix.scale(0.25, 0.25, 0.25);
+	g_modelMatrix.scale(0.5, 0.5, 0.5);
 		// if you DON'T scale, tetra goes outside the CVV; clipped!
-	g_modelMatrix.rotate(g_angle01, 1, 0, 0); // Make new drawing axes that
+	g_modelMatrix.rotate(g_angle02, 1, 0, 0); // Make new drawing axes that
 	
 	DrawPart1();
 
-	g_modelMatrix.setTranslate(-0.5, 0.5, 0.0); // 'set' means DISCARD old matrix,
+	g_modelMatrix.setTranslate(-0.824, -0.652, 0.0); // 'set' means DISCARD old matrix,
+		// (drawing axes centered in CVV), and then make new
+		// drawing axes moved to the lower-left corner of CVV. 
+	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
+		// to match WebGL display canvas.
+	g_modelMatrix.scale(0.5, 0.5, 0.5);
+		// if you DON'T scale, tetra goes outside the CVV; clipped!
+	g_modelMatrix.rotate(g_angle02, 1, 0, 0); // Make new drawing axes that
+	
+	DrawPart1();
+
+	g_modelMatrix.setTranslate(-0.4, -0.4, -0.4); // 'set' means DISCARD old matrix,
+		// (drawing axes centered in CVV), and then make new
+		// drawing axes moved to the lower-left corner of CVV. 
+	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
+		// to match WebGL display canvas.
+	g_modelMatrix.scale(0.5, 0.5, 0.5);
+		// if you DON'T scale, tetra goes outside the CVV; clipped!
+	g_modelMatrix.rotate(g_angle02, 1, 0, 0); // Make new drawing axes that
+
+	DrawPart1();
+
+	g_modelMatrix.setTranslate(-0.5, 0.5, -0.4); // 'set' means DISCARD old matrix,
 	g_modelMatrix.scale(0.5, 0.5, -1); // convert to left-handed coord sys
 	DrawPart2();
 
@@ -470,8 +503,8 @@ function animate()
 
 	// Update the current rotation angle (adjusted by the elapsed time)
 	//  limit the angle to move smoothly between +45 and -45 degrees:
-	if (g_angle02 > 45.0 && g_angle02Rate > 0) g_angle02Rate = -g_angle02Rate;
-	if (g_angle02 < -45.0 && g_angle02Rate < 0) g_angle02Rate = -g_angle02Rate;
+	if (g_angle02 > 30.0 && g_angle02Rate > 0) g_angle02Rate = -g_angle02Rate;
+	if (g_angle02 < -30.0 && g_angle02Rate < 0) g_angle02Rate = -g_angle02Rate;
 	g_angle02 = g_angle02 + (g_angle02Rate * elapsed) / 1000.0; // rate in degrees/sec
 
 	return g_angle01
