@@ -249,12 +249,12 @@ function initVertexBuffer()
 		// part 1 //
 		// black purple yellow triangle
 		0.0, 0.0, 0.0, 1.0, 		0.0, 0.0, 0.0, // Node 3 black
-		c30, -0.5, 0.0, 1.0, 		0.5, 0.0, 0.5, // Node 4 puple
+		c30, 1.0, 0.0, 1.0, 		0.5, 0.0, 0.5, // Node 4 puple
 		0.0, 1.0, 0.0, 1.0, 		0.5, 0.5, 0.0, // Node 5 yellow
 
 		// part 2 //
 		// white red black triangle
-		0.0, 0.0, sq2, 1.0, 		1.0, 1.0, 1.0, // Node 3 white
+		0.0, 0.0, 0.0, 1.0, 		1.0, 1.0, 1.0, // Node 3 white
 		c30, -0.5, 0.0, 1.0, 		1.0, 0.0, 0.0, // Node 4 red
 		0.0, 1.0, 0.0, 1.0, 		0.0, 0.0, 0.0, // Node 5 black
 
@@ -362,6 +362,10 @@ function drawAll()
 	g_modelMatrix.setTranslate(0.5, -0.5, 0.0); // 'set' means DISCARD old matrix,
 	g_modelMatrix.scale(0.5, 0.5, -1); // convert to left-handed coord sys
 	DrawPart1();
+
+	g_modelMatrix.setTranslate(-0.5, 0.5, 0.0); // 'set' means DISCARD old matrix,
+	g_modelMatrix.scale(0.5, 0.5, -1); // convert to left-handed coord sys
+	DrawPart2();
 
 	// NEXT, create different drawing axes, and...
 	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
