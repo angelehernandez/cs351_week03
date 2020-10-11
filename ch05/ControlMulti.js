@@ -248,7 +248,7 @@ function initVertexBuffer()
 
 		// part 1 //
 		// black purple yellow triangle
-		0.0, 0.0, sq2, 1.0, 		0.0, 0.0, 0.0, // Node 3 black
+		0.0, 0.0, 0.0, 1.0, 		0.0, 0.0, 0.0, // Node 3 black
 		c30, -0.5, 0.0, 1.0, 		0.5, 0.0, 0.5, // Node 4 puple
 		0.0, 1.0, 0.0, 1.0, 		0.5, 0.5, 0.0, // Node 5 yellow
 
