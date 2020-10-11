@@ -349,22 +349,15 @@ function drawAll()
 
 	//-------Draw Spinning Tetrahedron
 	g_modelMatrix.setTranslate(-0.4, -0.4, 0.0); // 'set' means DISCARD old matrix,
-	// (drawing axes centered in CVV), and then make new
-	// drawing axes moved to the lower-left corner of CVV. 
+		// (drawing axes centered in CVV), and then make new
+		// drawing axes moved to the lower-left corner of CVV. 
 	g_modelMatrix.scale(1, 1, -1); // convert to left-handed coord sys
-	// to match WebGL display canvas.
+		// to match WebGL display canvas.
 	g_modelMatrix.scale(0.5, 0.5, 0.5);
-	// if you DON'T scale, tetra goes outside the CVV; clipped!
+		// if you DON'T scale, tetra goes outside the CVV; clipped!
 	g_modelMatrix.rotate(g_angle01, 0, 1, 0); // Make new drawing axes that
 
-	// DRAW TETRA:  Use this matrix to transform & draw 
-	//						the first set of vertices stored in our VBO:
-	// Pass our current matrix to the vertex shaders:
-	gl.uniformMatrix4fv(g_modelMatLoc, false, g_modelMatrix.elements);
-	// Draw triangles: start at vertex 0 and draw 12 vertices
-	// gl.drawArrays(gl.TRIANGLES, 0, 12);
 	DrawTetra();
-	DrawPart1();
 
 	// NEXT, create different drawing axes, and...
 	g_modelMatrix.setTranslate(0.4, 0.4, 0.0); // 'set' means DISCARD old matrix,
@@ -411,7 +404,12 @@ function drawAll()
 
 }
 
-function DrawTetra() {
+function DrawTetra() {	
+	// DRAW TETRA:  Use this matrix to transform & draw 
+	//						the first set of vertices stored in our VBO:
+	// Pass our current matrix to the vertex shaders:
+	gl.uniformMatrix4fv(g_modelMatLoc, false, g_modelMatrix.elements);
+	// Draw triangles: start at vertex 0 and draw 12 vertices
 	gl.drawArrays(gl.TRIANGLES, 0, 12)
 }
 
@@ -424,7 +422,7 @@ function DrawPart1() {
 }
 
 function DrawPart2() {
-	// gl.drawArrays(gl.TRIANGLES, 6, 6);
+	gl.drawArrays(gl.TRIANGLES, 15, 3);
 }
 
 // Last time that this function was called:  (used for animation timing)
